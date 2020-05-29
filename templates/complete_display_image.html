@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img src=" {{url_for('send_image', filename=image_list[number])}}">
+
+<form id="next-form" action="{{ url_for('get_gallery') }}" method="post">
+    <input type="submit" name="category" value="overweight">
+    <input type="submit" name="category" value="normalweight">
+</form>
+</body>
+</html>
