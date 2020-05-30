@@ -35,31 +35,36 @@ def upload():
 
     # return send_from_directory("images", filename, as_attachment=True)
     image_names = os.listdir('./images')
-    return render_template("complete_display_image.html", image_list=image_names, number = 0)
+    return render_template("complete_display_image.html", image_list=image_names, number = 0, count = 0)
 
 @app.route('/upload/<filename>')
 def send_image(filename):
     return send_from_directory("images", filename)
 
 
+count = 0
 @app.route('/gallery/', methods = ["POST"])
 def get_gallery():
-    
+    global count
     image_names = os.listdir('./images')
     if request.method == 'POST':
         if request.form['category'] == 'overweight':
             source = os.path.join(APP_ROOT, 'images/') + image_names[0]
             destination = os.path.join(APP_ROOT, 'sorted/overweight/') + image_names[0]
             os.rename(source, destination) 
-        else:
+        elif(request.form['category'] == 'normalweight'):
             source = os.path.join(APP_ROOT, 'images/') + image_names[0]
             destination = os.path.join(APP_ROOT, 'sorted/normalweight/') + image_names[0]
             os.rename(source, destination) 
+        else:
+            source = os.path.join(APP_ROOT, 'images/') + image_names[0]
+            os.remove(source)
     image_names = os.listdir('./images')
+    count += 1
     if(len(image_names) == 0):
         return render_template("end.html")
     else: 
-        return render_template("complete_display_image.html", image_list=image_names, number = 0)
+        return render_template("complete_display_image.html", image_list=image_names, number = 0, count = count)
 
 
 if __name__ == "__main__":
