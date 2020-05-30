@@ -41,20 +41,25 @@ def upload():
 def send_image(filename):
     return send_from_directory("images", filename)
 
-image_index = 0
-@app.route('/gallery/', methods = ["post"])
+
+@app.route('/gallery/', methods = ["POST"])
 def get_gallery():
-    if request.form.post['action'] == 'overweight':
-        print("over")
-    else:
-        print("normal")
+    
     image_names = os.listdir('./images')
-    global image_index
-    image_index += 1
-    if(image_index == len(image_names)):
+    if request.method == 'POST':
+        if request.form['category'] == 'overweight':
+            source = os.path.join(APP_ROOT, 'images/') + image_names[0]
+            destination = os.path.join(APP_ROOT, 'sorted/overweight/') + image_names[0]
+            os.rename(source, destination) 
+        else:
+            source = os.path.join(APP_ROOT, 'images/') + image_names[0]
+            destination = os.path.join(APP_ROOT, 'sorted/normalweight/') + image_names[0]
+            os.rename(source, destination) 
+    image_names = os.listdir('./images')
+    if(len(image_names) == 0):
         return render_template("end.html")
     else: 
-        return render_template("complete_display_image.html", image_list=image_names, number = image_index)
+        return render_template("complete_display_image.html", image_list=image_names, number = 0)
 
 
 if __name__ == "__main__":

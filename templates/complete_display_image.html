@@ -5,9 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-<img src=" {{url_for('send_image', filename=image_list[number])}}">
+<img height=300 src=" {{url_for('send_image', filename=image_list[number])}}">
 
-<form id="next-form" action="{{ url_for('get_gallery') }}" method="post">
+<form id="next-form" action="{{ url_for('get_gallery') }}" method="POST">
     <input type="submit" name="category" value="overweight">
     <input type="submit" name="category" value="normalweight">
 </form>
