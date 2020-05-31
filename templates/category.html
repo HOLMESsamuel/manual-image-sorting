@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Category</title>
+    </head>
+    <body>
+        <h1>Choose your categories</h1>
+        <h2>Categories you have : </h2>
+        <ol>
+            {%for i in range(0, len)%} 
+                <li>{{category_list[i]}}</li> 
+            {% endfor %}
+        </ol>
+        
+        <form action="{{ url_for('category') }}" method="POST">
+            <input type="text" name="category">
+            <input type="submit" name = "validate" value = "add category">
+            <input type="submit" name="validate" value ="finished">
+        </form>
+        
+    </body>
+</html>
